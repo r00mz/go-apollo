@@ -10,6 +10,11 @@ const (
 	defaultTimeout        = time.Second * 10
 	defaultInterval       = time.Second
 	defaultNotificationID = -1
+	defaultKeepAliveSecond = 60 * time.Second
+	defaultTimeoutBySecond = 1 * time.Second
+	maxRetries = 5
+	defaultMaxConnes = 512
+	onErrorRetryInterval = 2 * time.Second
 )
 
 type Config struct {

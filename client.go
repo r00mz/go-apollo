@@ -80,8 +80,11 @@ func (c *Client) GetNamespace(namespace string, notificationId int) (bool, error
 	releaseKey := ""
 
 	if value, ok := c.data.Load(namespace); ok {
-		if data, ok := value.(*NamespaceData); ok {
-			releaseKey = data.ReleaseKey
+		data := value.(*NamespaceData)
+		releaseKey = data.ReleaseKey
+		if data.NotificationId != notificationId {
+			data.NotificationId = notificationId
+			c.data.Store(namespace, data)
 		}
 	}
 
@@ -134,7 +137,7 @@ func (c *Client) GetNotifications(ns []Notification) ([]Notification, error) {
 	)
 
 	var res []Notification
-	_, err := HttpGet(serverUrl, 75, &res)
+	_, err := HttpGetWithTransport(serverUrl, 75, false, &res)
 
 	return res, err
 }

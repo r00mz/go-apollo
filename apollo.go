@@ -57,13 +57,14 @@ func (app *App) startLongPoll() {
 	for {
 		select {
 		case <-timer.C:
+			fmt.Printf("begin long polling execute.\n")
 			err := app.longPoll()
 			if err != nil {
 				app.err <- err
 			} else {
 				timer.Reset(app.Client.interval)
 			}
-			fmt.Printf("long polling execute.\n")
+			fmt.Printf("end long polling execute.\n")
 		case <-app.stop:
 			fmt.Printf("[%s] stop listener", app.Client.appId)
 			return
