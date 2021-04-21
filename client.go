@@ -33,7 +33,7 @@ func NewClient(opts ...ConfigOptions) *Client {
 	return c
 }
 
-func (c *Client) getString(key string) (string, error) {
+func (c *Client) GetString(key string) (string, error) {
 	if !c.isInit.Load().(bool) {
 		err := c.getConfig()
 		if err != nil {
